@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.local
+.DS_Store
+Thumbs.db
+
+# 冒烟测试生成物
+scripts/*.pptx
+scripts/pptx_check/

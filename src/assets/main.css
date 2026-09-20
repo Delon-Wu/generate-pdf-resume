@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Print Styles for A4 ===== */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  /* 打印时只留 article，其他全部隐藏 */
+  html,
+  body,
+  #app,
+  .print-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 210mm !important;
+    background: white !important;
+    min-height: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* 隐藏所有非打印元素 */
+  .no-print,
+  nav,
+  button:not(.keep-in-print) {
+    display: none !important;
+  }
+
+  /* 确保 print-wrapper 的所有子元素除 article 外都隐藏 */
+  .print-wrapper > *:not(.print-area) {
+    display: none !important;
+  }
+
+  .print-area {
+    width: 210mm !important;
+    max-width: 210mm !important;
+    min-height: 297mm !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    page-break-after: auto;
+  }
+
+  /* 只对小板块禁用跨页断行。
+     注意：不能给可能超过一页高的大容器加 break-inside，
+     否则 Chrome 无法排版超页高的不可断行块，会把它栅格化成图片，
+     导致 PDF 文字无法选中、无法被 AI/ATS 检索。 */
+  .print-area header,
+  .print-area .experience-item,
+  .print-area .project-item {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* 打印时把正文容器从 flex 转成 block：
+     Chrome 对 flex 容器的分页碎片化支持不佳，section 无法在换页处断行。
+     转 block 后各 section 可在页边界正常断开换页。 */
+  .print-area .resume-body {
+    display: block !important;
+  }
+
+  /* gap-3 的间距用 margin 补偿（block 布局下 gap 无效） */
+  .print-area .resume-body > section + section {
+    margin-top: 0.75rem !important;
+  }
+
+  /* 章节标题不孤行：避免标题被单独留在页底 */
+  .print-area section h2 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+}
+
+/* ===== Smooth scrollbar ===== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+/* ===== Form animations ===== */
+.motion-safe .form-section-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ===== Tag input styles ===== */
+.tag-pill {
+  @apply inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-full
+         bg-resume-tag text-resume-tag-text cursor-default transition-colors;
+}
+.tag-pill button {
+  @apply ml-0.5 hover:text-red-500 transition-colors;
+}
+
+/* 表单页：技能类别颜色 */
+.tag-pill.tag-skill-0 { @apply bg-blue-100 text-blue-700; }        /* 编程语言 */
+.tag-pill.tag-skill-1 { @apply bg-violet-100 text-violet-700; }    /* 框架 & 库 */
+.tag-pill.tag-skill-2 { @apply bg-emerald-100 text-emerald-700; }  /* 工具 & 平台 */
+.tag-pill.tag-skill-3 { @apply bg-amber-100 text-amber-700; }      /* 数据库 */
+
