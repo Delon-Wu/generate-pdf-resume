@@ -184,12 +184,12 @@ function goBack() {
             >
               <div class="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-cyan-400"></div>
               <div class="flex flex-wrap items-baseline justify-between gap-1 mb-1">
-                <h3 class="font-semibold text-gray-800">{{ exp.position || '职位' }}</h3>
+                <h3 class="font-semibold text-gray-800">{{ exp.company || '公司' }} - {{ exp.position || '职位' }}</h3>
                 <span class="text-xs text-gray-400">
                   <template v-if="exp.startDate">{{ fmtDate(exp.startDate) }} — {{ exp.current ? '至今' : fmtDate(exp.endDate) }}</template>
                 </span>
               </div>
-              <p v-if="exp.company" class="text-sm text-gray-500 mb-1.5">{{ exp.company }}</p>
+
               <p v-if="exp.description" class="text-sm text-gray-600 leading-relaxed mb-2" v-html="exp.description"></p>
               <ul v-if="exp.highlights.length > 0" class="space-y-1">
                 <li
