@@ -7,3 +7,6 @@ Thumbs.db
 # 冒烟测试生成物
 scripts/*.pptx
 scripts/pptx_check/
+
+# 简历数据导出文件（含隐私信息，不进仓库）
+public/*.json
